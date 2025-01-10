@@ -11,10 +11,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" />
-        <Stack.Screen
-          name="[id]"
-          options={{ presentation: "transparentModal", animation: "fade" }}
-        />
+        <Stack.Screen name="[id]" options={{ presentation: "modal" }} />
       </Stack>
     </>
   );
