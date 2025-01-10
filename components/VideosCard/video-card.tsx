@@ -1,31 +1,34 @@
 import { View, TouchableOpacity } from "react-native";
 import React from "react";
-import { useVideoPlayer } from "expo-video";
 import { VideoCardProps } from "../../types/video";
 import CardContent from "./card-content";
 import VPlayer from "../common/video-player";
 import { useRouter } from "expo-router";
-
+import Animated, { FadeInDown } from "react-native-reanimated";
 const VideoCard = ({ video }: VideoCardProps) => {
   const router = useRouter();
-  const player = useVideoPlayer(video.videoUrl, (player) => {
-    player.loop = false;
-  });
-
   const handleVideoPress = () => {
     router.push(`/${video.id}`);
   };
 
   return (
-    <TouchableOpacity
-      className="flex-row p-4 border-b border-gray-200"
-      onPress={handleVideoPress}
+    <Animated.View
+      entering={FadeInDown.duration(500).delay(Number(video.id) * 120)}
     >
-      <View className="w-40 h-26 rounded-lg overflow-hidden">
-        <VPlayer player={player} nativeControls={false} />
-      </View>
-      <CardContent video={video} />
-    </TouchableOpacity>
+      <TouchableOpacity
+        className="flex-row p-4 border-gray-300 border rounded-lg"
+        onPress={handleVideoPress}
+      >
+        <View className="w-40 h-26 rounded-lg overflow-hidden">
+          <VPlayer
+            url={video.videoUrl}
+            nativeControls={false}
+            autoPlay={false}
+          />
+        </View>
+        <CardContent video={video} />
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 

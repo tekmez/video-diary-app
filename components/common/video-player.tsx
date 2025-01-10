@@ -2,13 +2,22 @@ import { StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 import { VideoView } from "expo-video";
 import { VPlayerProps } from "@/types/video";
+import { useVideoPlayer } from "expo-video";
 
 const VPlayer = ({
-  player,
+  url,
   nativeControls = true,
   style,
+  autoPlay,
   ...props
 }: VPlayerProps) => {
+  const player = useVideoPlayer(url, (player) => {
+    player.loop = false;
+    if (autoPlay) {
+      player.play();
+    }
+  });
+
   return (
     <SafeAreaView>
       <VideoView

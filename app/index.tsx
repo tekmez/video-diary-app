@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, FlatList } from "react-native";
+import { SafeAreaView, Text, FlatList, View } from "react-native";
 import { Video } from "@/types/video";
 import VideoCard from "@/components/VideosCard/video-card";
 import { useVideoStore } from "@/store/video-store";
@@ -14,11 +14,12 @@ export default function Home() {
         data={videos}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        className="flex-1"
+        className="flex-1 p-4"
         showsVerticalScrollIndicator={false}
         initialNumToRender={5}
         maxToRenderPerBatch={5}
         windowSize={5}
+        ItemSeparatorComponent={() => <View className="h-4" />}
       />
     </SafeAreaView>
   );

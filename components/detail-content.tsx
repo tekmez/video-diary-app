@@ -26,7 +26,7 @@ const DetailContent = ({
       </Animated.Text>
       <Animated.Text
         entering={FadeInDown.duration(400).delay(700)}
-        className="text-gray-400 text-sm text-right mt-4"
+        className="text-gray-500 text-sm text-right mt-4"
       >
         {date}
       </Animated.Text>

@@ -10,8 +10,9 @@ export interface Video {
 }
 
 export interface VPlayerProps {
-  player: any;
+  url: any;
   nativeControls?: boolean;
+  autoPlay: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
