@@ -11,6 +11,7 @@ const VPlayer = ({
   autoPlay,
   ...props
 }: VPlayerProps) => {
+  if (!url) return null;
   const player = useVideoPlayer(url, (player) => {
     player.loop = false;
     if (autoPlay) {

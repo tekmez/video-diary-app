@@ -5,7 +5,7 @@ export interface Video {
   title: string;
   description: string;
   date: string;
-  videoUrl: any;
+  videoUrl: string;
   thumbnailUrl?: string;
 }
 
