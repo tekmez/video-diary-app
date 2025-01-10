@@ -8,7 +8,7 @@ export default function Home() {
   const renderItem = ({ item }: { item: Video }) => <VideoCard video={item} />;
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <Text className="text-2xl font-bold mb-4 text-center">Video Diary</Text>
       <FlatList
         data={videos}
