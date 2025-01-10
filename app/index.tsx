@@ -1,6 +1,6 @@
 import { SafeAreaView, Text, FlatList } from "react-native";
-import VideoCard from "../components/Video/video-card";
 import { sampleVideos, Video } from "@/types/video";
+import VideoCard from "@/components/VideosCard/video-card";
 export default function Home() {
   const renderItem = ({ item }: { item: Video }) => <VideoCard video={item} />;
 

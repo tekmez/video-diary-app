@@ -1,3 +1,5 @@
+import { StyleProp, ViewStyle } from "react-native";
+
 export interface Video {
   id: string;
   title: string;
@@ -5,6 +7,16 @@ export interface Video {
   date: string;
   videoUrl: any;
   thumbnailUrl?: string;
+}
+
+export interface VPlayerProps {
+  player: any;
+  nativeControls?: boolean;
+  style?: StyleProp<ViewStyle>;
+}
+
+export interface VideoCardProps {
+  video: Video;
 }
 
 export const sampleVideos: Video[] = [
