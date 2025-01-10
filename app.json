@@ -34,7 +34,12 @@
           "photosPermission": "The app needs access to your photos to let you select videos.",
           "savePhotosPermission": "The app needs access to save processed videos."
         }
-      ]
+      ],
+     [ "expo-video",
+      {
+        "supportsBackgroundPlayback": true,
+        "supportsPictureInPicture": true
+      }]
     ],
     "scheme": "video-diary-app"
   }
