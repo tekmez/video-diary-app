@@ -23,11 +23,7 @@ export default function VideoDetail() {
   return (
     <View className="flex-1 bg-white">
       <View className="w-full h-[250px] relative">
-        <VPlayer
-          player={player}
-          style={{ width: "100%", height: "100%" }}
-          sharedTransitionTag={`video-${id}`}
-        />
+        <VPlayer player={player} style={{ width: "100%", height: "100%" }} />
         <TouchableOpacity
           className="absolute top-12 left-4 p-2 bg-black/50 rounded-full"
           onPress={() => router.back()}

@@ -13,7 +13,6 @@ export interface VPlayerProps {
   player: any;
   nativeControls?: boolean;
   style?: StyleProp<ViewStyle>;
-  sharedTransitionTag?: string;
 }
 
 export interface VideoCardProps {
