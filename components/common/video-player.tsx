@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import React from "react";
 import { VideoView } from "expo-video";
 import { VPlayerProps } from "@/types/video";
@@ -10,14 +10,16 @@ const VPlayer = ({
   ...props
 }: VPlayerProps) => {
   return (
-    <VideoView
-      style={[styles.video, style]}
-      player={player}
-      allowsFullscreen
-      contentFit="cover"
-      nativeControls={nativeControls}
-      {...props}
-    />
+    <SafeAreaView>
+      <VideoView
+        style={[styles.video, style]}
+        player={player}
+        allowsFullscreen
+        contentFit="cover"
+        nativeControls={nativeControls}
+        {...props}
+      />
+    </SafeAreaView>
   );
 };
 

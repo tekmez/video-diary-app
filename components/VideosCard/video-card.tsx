@@ -2,24 +2,18 @@ import { View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useVideoPlayer } from "expo-video";
 import { VideoCardProps } from "../../types/video";
-import { useEvent } from "expo";
 import CardContent from "./card-content";
 import VPlayer from "../common/video-player";
+import { useRouter } from "expo-router";
 
 const VideoCard = ({ video }: VideoCardProps) => {
+  const router = useRouter();
   const player = useVideoPlayer(video.videoUrl, (player) => {
     player.loop = false;
   });
-  const { isPlaying } = useEvent(player, "playingChange", {
-    isPlaying: player.playing,
-  });
 
   const handleVideoPress = () => {
-    if (isPlaying) {
-      player.pause();
-    } else {
-      player.play();
-    }
+    router.push(`/${video.id}`);
   };
 
   return (

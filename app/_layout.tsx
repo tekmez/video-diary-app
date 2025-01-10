@@ -1,6 +1,6 @@
-import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "../assets/styles/global.css";
+import { Stack } from "expo-router";
 export default function RootLayout() {
   return (
     <>
@@ -8,15 +8,14 @@ export default function RootLayout() {
       <Stack
         screenOptions={{
           headerShown: false,
-          headerStyle: {
-            backgroundColor: "#fff",
-          },
-          headerTintColor: "#000",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
         }}
-      />
+      >
+        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="[id]"
+          options={{ presentation: "transparentModal", animation: "fade" }}
+        />
+      </Stack>
     </>
   );
 }
