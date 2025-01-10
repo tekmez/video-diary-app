@@ -17,15 +17,15 @@ const VideoCard = ({ video }: VideoCardProps) => {
   };
 
   return (
-    <View className="flex-row p-4 border-b border-gray-200">
-      <TouchableOpacity
-        className="w-40 h-26 rounded-lg overflow-hidden"
-        onPress={handleVideoPress}
-      >
+    <TouchableOpacity
+      className="flex-row p-4 border-b border-gray-200"
+      onPress={handleVideoPress}
+    >
+      <View className="w-40 h-26 rounded-lg overflow-hidden">
         <VPlayer player={player} nativeControls={false} />
-      </TouchableOpacity>
+      </View>
       <CardContent video={video} />
-    </View>
+    </TouchableOpacity>
   );
 };
 
