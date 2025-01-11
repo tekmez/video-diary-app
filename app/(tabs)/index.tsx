@@ -16,9 +16,6 @@ export default function Home() {
         keyExtractor={(item) => item.id}
         className="flex-1 p-4"
         showsVerticalScrollIndicator={false}
-        initialNumToRender={5}
-        maxToRenderPerBatch={5}
-        windowSize={5}
         ItemSeparatorComponent={() => <View className="h-4" />}
       />
     </SafeAreaView>

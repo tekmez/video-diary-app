@@ -90,7 +90,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
         2
       )} -i "${currentVideo}" -t ${durationInSeconds.toFixed(
         2
-      )} -c:v h264 -c:a aac -movflags +faststart "${outputUri}"`;
+      )} -c:v h264 -preset medium -b:v 4M -c:a aac -movflags +faststart "${outputUri}"`;
 
       try {
         const session = await FFmpegKit.execute(command);

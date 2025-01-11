@@ -9,7 +9,7 @@ export default function EditButton({ handleEdit }: EditButtonProps) {
   return (
     <Animated.View
       entering={FadeInDown.duration(400).delay(800)}
-      className="relative bottom-16 left-0 right-0"
+      className="relative bottom-14 left-0 right-0"
     >
       <TouchableOpacity
         onPress={handleEdit}
