@@ -4,7 +4,6 @@ import { VideoCardProps } from "../../types/video";
 import CardContent from "./card-content";
 import VPlayer from "../common/video-player";
 import { useRouter } from "expo-router";
-import Animated, { FadeInDown } from "react-native-reanimated";
 const VideoCard = ({ video }: VideoCardProps) => {
   const router = useRouter();
   const handleVideoPress = () => {
