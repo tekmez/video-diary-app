@@ -4,6 +4,7 @@ import { videoSchema, type VideoFormData } from "../schemas/video.schema";
 import { useVideoStore } from "../store/video-store";
 import { router } from "expo-router";
 import { Video } from "../types/video";
+import { formatDate } from "../utils/date-formatter";
 
 export const useVideoForm = () => {
   const addVideo = useVideoStore((state) => state.addVideo);
@@ -23,7 +24,7 @@ export const useVideoForm = () => {
       id: Date.now().toString(),
       title: data.title,
       description: data.description,
-      date: data.createdAt.toLocaleDateString(),
+      date: formatDate(data.createdAt),
       videoUrl: data.videoUri,
       thumbnailUrl: undefined,
     };
