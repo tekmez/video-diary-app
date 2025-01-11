@@ -47,7 +47,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
           className="w-full h-full items-center justify-center"
         >
           <Ionicons name="cloud-upload-outline" size={40} color="gray" />
-          <Text className="text-sm text-gray-500 mt-2">Video Yükle</Text>
+          <Text className="text-sm text-gray-500 mt-2">Upload Video</Text>
         </TouchableOpacity>
       )}
     </View>

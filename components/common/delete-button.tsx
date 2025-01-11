@@ -5,7 +5,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 const DeleteButton = ({ handleDelete }: { handleDelete: () => void }) => {
   return (
     <Animated.View
-      entering={FadeInDown.duration(400).delay(800)}
+      entering={FadeInDown.duration(400).delay(900)}
       className="relative bottom-12 left-0 right-0"
     >
       <TouchableOpacity
