@@ -28,7 +28,6 @@ export const useVideoForm = () => {
       videoUrl: data.videoUri,
       thumbnailUrl: undefined,
     };
-    
     addVideo(newVideo);
     form.reset();
     router.back();

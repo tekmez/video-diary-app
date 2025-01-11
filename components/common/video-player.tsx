@@ -1,5 +1,5 @@
 import { StyleSheet, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { VideoView } from "expo-video";
 import { VPlayerProps } from "@/types/video";
 import { useVideoPlayer } from "expo-video";
@@ -12,6 +12,7 @@ const VPlayer = ({
   ...props
 }: VPlayerProps) => {
   if (!url) return null;
+
   const player = useVideoPlayer(url, (player) => {
     player.loop = false;
     if (autoPlay) {
@@ -39,5 +40,6 @@ const styles = StyleSheet.create({
   video: {
     width: 156,
     height: 108,
+    aspectRatio: 16 / 9,
   },
 });
