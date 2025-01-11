@@ -1,8 +1,9 @@
-import { View, Text, Modal, TextInput, TouchableOpacity } from "react-native";
+import { View, Text, Modal, TouchableOpacity } from "react-native";
 import { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editVideoSchema, EditVideoFormData } from "@/schemas/video.schema";
+import { FormField } from "@/components/AddVideoForm/FormField";
 
 interface EditVideoModalProps {
   visible: boolean;
@@ -17,12 +18,7 @@ export default function EditVideoModal({
   onSave,
   initialData,
 }: EditVideoModalProps) {
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<EditVideoFormData>({
+  const { control, handleSubmit, reset } = useForm<EditVideoFormData>({
     resolver: zodResolver(editVideoSchema),
     defaultValues: initialData,
   });
@@ -44,46 +40,21 @@ export default function EditVideoModal({
         <View className="bg-white mx-4 p-4 rounded-lg">
           <Text className="text-lg font-bold mb-4">Edit Video</Text>
 
-          <Text className="font-medium mb-2">Title</Text>
-          <Controller
+          <FormField
             control={control}
             name="title"
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <TextInput
-                  value={value}
-                  onChangeText={onChange}
-                  className="border border-gray-300 rounded-lg p-2"
-                />
-                {errors.title && (
-                  <Text className="text-red-500 text-sm mt-1">
-                    {errors.title.message?.toString()}
-                  </Text>
-                )}
-              </View>
-            )}
+            label="Title"
+            placeholder="Video title"
+            maxLength={25}
           />
 
-          <Text className="font-medium mb-2 mt-4">Description</Text>
-          <Controller
+          <FormField
             control={control}
             name="description"
-            render={({ field: { onChange, value } }) => (
-              <View>
-                <TextInput
-                  value={value}
-                  onChangeText={onChange}
-                  multiline
-                  numberOfLines={4}
-                  className="border border-gray-300 rounded-lg p-2"
-                />
-                {errors.description && (
-                  <Text className="text-red-500 text-sm mt-1">
-                    {errors.description.message?.toString()}
-                  </Text>
-                )}
-              </View>
-            )}
+            label="Description"
+            placeholder="Video description"
+            multiline
+            maxLength={250}
           />
 
           <View className="flex-row justify-end gap-2 mt-6">
