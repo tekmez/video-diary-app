@@ -13,7 +13,7 @@ const checkVideoReady = async (videoUri: string): Promise<boolean> => {
     const fileInfo = await FileSystem.getInfoAsync(videoUri.replace('file://', ''));
     return fileInfo.exists && fileInfo.size > 0;
   } catch (error) {
-    console.error('Video hazırlık kontrolü hatası:', error);
+    console.error('Video ready check error:', error);
     return false;
   }
 };
