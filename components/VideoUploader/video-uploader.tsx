@@ -22,7 +22,7 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
   const [videoDuration, setVideoDuration] = useState(30);
   const [trimmedVideo, setTrimmedVideo] = useState<string | null>(null);
   const [currentVideo, setCurrentVideo] = useState<string | null>(null);
-  const [isVideoReady, setIsVideoReady] = useState(false);
+  const [isVideoReady, setIsVideoReady] = useState<boolean>(false);
 
   useEffect(() => {
     if (trimmedVideo) {
@@ -165,25 +165,28 @@ export const VideoUploader: React.FC<VideoUploaderProps> = ({
           >
             <Ionicons name="trash-outline" size={20} color="white" />
           </TouchableOpacity>
-          <View className="absolute bottom-0 w-full bg-black bg-opacity-70">
-            <VideoScrubber
-              duration={videoDuration}
-              startTime={startTime}
-              endTime={endTime}
-              onScrubChange={handleScrubChange}
-            />
-            <TouchableOpacity
-              onPress={() => trimVideo()}
-              disabled={isPending}
-              className={`mx-4 mb-4 py-2 px-4 rounded-lg ${
-                isPending ? "bg-gray-500" : "bg-[#1FB28A]"
-              }`}
-            >
-              <Text className="text-white text-center font-medium">
-                {isPending ? "Processing..." : "Trim Video"}
-              </Text>
-            </TouchableOpacity>
-          </View>
+
+          {!trimmedVideo && (
+            <View className="absolute bottom-0 w-full bg-black bg-opacity-70">
+              <VideoScrubber
+                duration={videoDuration}
+                startTime={startTime}
+                endTime={endTime}
+                onScrubChange={handleScrubChange}
+              />
+              <TouchableOpacity
+                onPress={() => trimVideo()}
+                disabled={isPending}
+                className={`mx-4 mb-4 py-2 px-4 rounded-lg ${
+                  isPending ? "bg-gray-500" : "bg-orange-500"
+                }`}
+              >
+                <Text className="text-white text-center font-medium">
+                  {isPending ? "Processing..." : "Trim Video"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       ) : (
         <TouchableOpacity

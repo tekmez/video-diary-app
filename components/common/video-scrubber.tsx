@@ -48,7 +48,7 @@ export const VideoScrubber: React.FC<VideoScrubberProps> = ({
           snapped
           minMarkerOverlapDistance={5}
           selectedStyle={{
-            backgroundColor: "#1FB28A",
+            backgroundColor: "white",
           }}
           unselectedStyle={{
             backgroundColor: "rgba(255,255,255,0.3)",
@@ -65,9 +65,9 @@ export const VideoScrubber: React.FC<VideoScrubberProps> = ({
             height: 24,
             width: 24,
             borderRadius: 12,
-            backgroundColor: "#1FB28A",
+            backgroundColor: "white",
             borderWidth: 3,
-            borderColor: "white",
+            borderColor: "black",
           }}
           onValuesChange={(values: number[]) => {
             const start = values[0];

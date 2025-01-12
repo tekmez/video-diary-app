@@ -46,7 +46,7 @@ export const AddVideoForm = () => {
 
       <TouchableOpacity
         onPress={handleSubmit(onSubmit)}
-        className="w-full bg-blue-500 p-4 rounded-lg"
+        className="w-full bg-green-500 p-4 rounded-lg"
       >
         <Text className="text-white text-center font-medium">Save</Text>
       </TouchableOpacity>
