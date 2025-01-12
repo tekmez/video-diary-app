@@ -34,7 +34,7 @@ Video Diary App is a modern mobile application developed with React Native and E
 
 1. Clone the project:
 ```bash
-git clone [repo-url]
+git clone https://github.com/tekmez/video-diary-app.git
 cd video-diary-app
 ```
 
