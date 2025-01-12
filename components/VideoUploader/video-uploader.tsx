@@ -1,157 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, Text, Alert, Platform } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import React from "react";
+import { View, TouchableOpacity, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation } from "@tanstack/react-query";
-import * as FileSystem from "expo-file-system";
-import { FFmpegKit, ReturnCode } from "ffmpeg-kit-react-native";
 import VPlayer from "../common/video-player";
 import { VideoScrubber } from "../common/video-scrubber";
-
-interface VideoUploaderProps {
-  value?: string;
-  onChange: (uri: string) => void;
-}
+import { useVideoUploader } from "../../hooks/useVideoUploader";
+import { useVideoTrimmer } from "../../hooks/useVideoTrimmer";
+import { VideoUploaderProps } from "@/types/video";
 
 export const VideoUploader: React.FC<VideoUploaderProps> = ({
   value,
   onChange,
 }) => {
-  const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(5);
-  const [videoDuration, setVideoDuration] = useState(30);
-  const [trimmedVideo, setTrimmedVideo] = useState<string | null>(null);
-  const [currentVideo, setCurrentVideo] = useState<string | null>(null);
-  const [isVideoReady, setIsVideoReady] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (trimmedVideo) {
-      checkVideoReady(trimmedVideo);
-    }
-  }, [trimmedVideo]);
-
-  const checkVideoReady = async (videoUri: string) => {
-    try {
-      const fileInfo = await FileSystem.getInfoAsync(
-        videoUri.replace("file://", "")
-      );
-      if (fileInfo.exists && fileInfo.size > 0) {
-        setIsVideoReady(true);
-      } else {
-        setIsVideoReady(false);
-      }
-    } catch (error) {
-      console.error("Video hazırlık kontrolü hatası:", error);
-      setIsVideoReady(false);
-    }
-  };
-
-  const pickVideo = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: "videos",
-      allowsEditing: true,
-      quality: 1,
+  const { currentVideo, videoDuration, pickVideo, handleReset } =
+    useVideoUploader({
+      onChange,
+      initialValue: value,
     });
 
-    if (!result.canceled && result.assets[0]) {
-      if (result.assets[0].duration) {
-        setVideoDuration(Math.floor(result.assets[0].duration));
-        setEndTime(Math.min(5, Math.floor(result.assets[0].duration)));
-      }
-      const uri = formatVideoUri(result.assets[0].uri);
-      setCurrentVideo(uri);
-      onChange(uri);
-      setTrimmedVideo(null);
-      setIsVideoReady(true);
-    }
-  };
-
-  const formatVideoUri = (uri: string) => {
-    if (Platform.OS === "ios") {
-      return uri.startsWith("file://") ? uri : `file://${uri}`;
-    }
-    return uri;
-  };
-
-  const { mutate: trimVideo, isPending } = useMutation({
-    mutationFn: async () => {
-      if (!currentVideo) return null;
-      setIsVideoReady(false);
-
-      const timestamp = new Date().getTime();
-      const filename = `trimmed_${timestamp}.mp4`;
-      const outputUri = `${FileSystem.cacheDirectory}${filename}`;
-
-      const startTimeInSeconds = startTime / 1000;
-      const endTimeInSeconds = endTime / 1000;
-      const durationInSeconds = endTimeInSeconds - startTimeInSeconds;
-
-      const command = `-ss ${startTimeInSeconds.toFixed(
-        2
-      )} -i "${currentVideo}" -t ${durationInSeconds.toFixed(
-        2
-      )} -c:v h264 -preset medium -b:v 4M -c:a aac -movflags +faststart "${outputUri}"`;
-
-      try {
-        const session = await FFmpegKit.execute(command);
-        const returnCode = await session.getReturnCode();
-
-        if (ReturnCode.isSuccess(returnCode)) {
-          await new Promise((resolve) => setTimeout(resolve, 500));
-
-          const fileInfo = await FileSystem.getInfoAsync(outputUri);
-          if (fileInfo.exists && fileInfo.size > 0) {
-            return formatVideoUri(outputUri);
-          }
-        } else {
-          throw new Error("Video trimming process failed");
-        }
-        return null;
-      } catch (error) {
-        Alert.alert(
-          "Error",
-          "Video trimming process failed. Please try again."
-        );
-        return null;
-      }
-    },
-    onSuccess: async (result) => {
-      if (result) {
-        const fileInfo = await FileSystem.getInfoAsync(
-          result.replace("file://", "")
-        );
-        if (fileInfo.exists && fileInfo.size > 0) {
-          setTrimmedVideo(result);
-          onChange(result);
-          setIsVideoReady(true);
-        } else {
-          Alert.alert("Error", "Trimmed video file not found.");
-        }
-      }
-    },
-    onError: (error) => {
-      console.error("FFMPEG error:", error);
-      Alert.alert("Error", "Video trimming process failed. Please try again.");
-      setIsVideoReady(false);
-    },
+  const {
+    startTime,
+    endTime,
+    trimmedVideo,
+    isPending,
+    handleScrubChange,
+    trimVideo,
+  } = useVideoTrimmer({
+    currentVideo,
+    onChange,
   });
 
-  const handleScrubChange = ([start, end]: [number, number]) => {
-    setStartTime(start);
-    setEndTime(end);
-  };
-
-  const handleReset = () => {
-    setTrimmedVideo(null);
-    setCurrentVideo(null);
-    setIsVideoReady(false);
-    onChange("");
-  };
-
   const videoToDisplay = trimmedVideo || currentVideo || value;
+
   return (
     <View className="w-full aspect-video bg-gray-100 rounded-lg overflow-hidden">
-      {videoToDisplay && isVideoReady ? (
+      {videoToDisplay ? (
         <View className="relative w-full h-full">
           <VPlayer
             key={videoToDisplay}
